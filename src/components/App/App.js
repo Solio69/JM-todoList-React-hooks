@@ -5,15 +5,14 @@ import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import TaskList from '../TaskList/TaskList';
 import Footer from '../Footer/Footer';
 
-const App = function() {
-
+const App = function () {
   // если в localStorage есть данные, то устанавливает значение из localStorage, если нет, то пустой массив
-  const [todoData, setTodoData]= useState(JSON.parse(localStorage.getItem('todoData')) || [])
+  const [todoData, setTodoData] = useState(JSON.parse(localStorage.getItem('todoData')) || []);
 
   // если в localStorage есть данные, то устанавливает значение из localStorage, если нет, то 'all'
-  const [filter, setFilter]= useState(JSON.parse(localStorage.getItem('filter')) || 'all')
+  const [filter, setFilter] = useState(JSON.parse(localStorage.getItem('filter')) || 'all');
 
-  const createTodoItem =(label) =>{
+  const createTodoItem = (label) => {
     const str = String(new Date());
 
     return {
@@ -29,14 +28,14 @@ const App = function() {
         intervalId: 0,
       },
     };
-  }
+  };
 
   // добавляет элемент в список
   const addItem = (text) => {
     const newItem = createTodoItem(text);
     const newArr = [...todoData];
     newArr.push(newItem);
-    return setTodoData([...newArr])
+    return setTodoData([...newArr]);
   };
 
   // удаляет элемент списка
@@ -44,7 +43,7 @@ const App = function() {
     const ind = todoData.findIndex((el) => el.id === id);
     // eslint-disable-next-line id-length
     const newArr = todoData.filter((_, index) => index !== ind);
-    return setTodoData([...newArr])
+    return setTodoData([...newArr]);
   };
 
   // обновляет свойства элемента
@@ -57,7 +56,7 @@ const App = function() {
 
   // обновляет список с учетом выполненный tasks
   const onToggleDone = (id) => {
-    setTodoData([...toggleProperties(todoData, id, 'completed')])
+    setTodoData([...toggleProperties(todoData, id, 'completed')]);
   };
 
   // обновляет список с учетом отредактированный tasks
@@ -65,31 +64,30 @@ const App = function() {
     const newArr = [...todoData];
     const ind = newArr.findIndex((el) => el.id === id);
     newArr[ind] = updateItem;
-    return setTodoData([...newArr])
+    return setTodoData([...newArr]);
   };
 
   // обновляет список с учетом радактируемых в данный момент tasks
   const onToggleEdit = (id) => {
-    setTodoData([...toggleProperties(todoData, id, 'editing')])
+    setTodoData([...toggleProperties(todoData, id, 'editing')]);
   };
 
   const changeTimer = (id, updatTimerData) => {
     const newArr = [...todoData];
     const ind = newArr.findIndex((el) => el.id === id);
     newArr[ind].timerData = updatTimerData;
-    return setTodoData([...newArr])
-      
+    return setTodoData([...newArr]);
   };
 
   // изменяет значение свойства filter
   const onFilterChange = (filterName) => {
-    setFilter(filterName)
+    setFilter(filterName);
   };
 
   // удаляет все выполненные tasks
   const clearCompleted = () => setTodoData([...todoData].filter((item) => !item.completed));
 
-  // фильтры 
+  // фильтры
   // eslint-disable-next-line no-shadow
   const filters = (arr, filter) => {
     switch (filter) {
@@ -114,31 +112,29 @@ const App = function() {
   localStorage.setItem('todoData', JSON.stringify(todoData));
   localStorage.setItem('filter', JSON.stringify(filter));
 
-  return(
+  return (
     <section className="todoapp">
-        <header className="header">
-          <h1>todos</h1>
-          <NewTaskForm 
-            onItemAdded={addItem}
-           />
-        </header>
-        <section className="main">
-          <TaskList
-            todos={filtersItems}
-            onDeleted={deleteItem}
-            onToggleDone={onToggleDone}
-            onToggleEdit={onToggleEdit}
-            addEditedItem={addEditedItem}
-            changeTimer={changeTimer}
-          />
-          <Footer
-            taskCount={tasksLeftCount}
-            itemStatusFilter={filter}
-            onFilterChange={onFilterChange}
-            clearCompleted={clearCompleted}
-          />
-        </section>
+      <header className="header">
+        <h1>todos</h1>
+        <NewTaskForm onItemAdded={addItem} />
+      </header>
+      <section className="main">
+        <TaskList
+          todos={filtersItems}
+          onDeleted={deleteItem}
+          onToggleDone={onToggleDone}
+          onToggleEdit={onToggleEdit}
+          addEditedItem={addEditedItem}
+          changeTimer={changeTimer}
+        />
+        <Footer
+          taskCount={tasksLeftCount}
+          itemStatusFilter={filter}
+          onFilterChange={onFilterChange}
+          clearCompleted={clearCompleted}
+        />
       </section>
-  )
-}
+    </section>
+  );
+};
 export default App;

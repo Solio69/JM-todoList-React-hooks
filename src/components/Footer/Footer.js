@@ -4,15 +4,17 @@ import PropTypes from 'prop-types';
 
 import TasksFilter from '../TasksFilter/TasksFilter';
 
-const Footer = function({ taskCount, itemStatusFilter, onFilterChange, clearCompleted }) {
-  return <footer className="footer">
-    <span className="todo-count">{taskCount} items left</span>
-    <TasksFilter itemStatusFilter={itemStatusFilter} onFilterChange={onFilterChange} />
-    <button className="clear-completed" type="button" onClick={clearCompleted}>
-      Clear completed
-    </button>
-  </footer>
-}
+const Footer = function ({ taskCount, itemStatusFilter, onFilterChange, clearCompleted }) {
+  return (
+    <footer className="footer">
+      <span className="todo-count">{taskCount} items left</span>
+      <TasksFilter itemStatusFilter={itemStatusFilter} onFilterChange={onFilterChange} />
+      <button className="clear-completed" type="button" onClick={clearCompleted}>
+        Clear completed
+      </button>
+    </footer>
+  );
+};
 
 Footer.defaultProps = {
   itemStatusFilter: 'all',

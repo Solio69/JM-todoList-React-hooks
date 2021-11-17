@@ -1,33 +1,32 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from "react"
+import React from 'react';
 import './Task.css';
 import { formatDistanceToNow } from 'date-fns';
 import PropTypes from 'prop-types';
 import Timer from '../Timer/Timer';
 
-const Task = function({ onDeleted, onToggleEdit, onToggleDone, item, changeTimer, addEditedItem }) {
-
+const Task = function ({ onDeleted, onToggleEdit, onToggleDone, item, changeTimer, addEditedItem }) {
   const { label, dateСreation, completed, editing, timerData, id } = item;
 
-  // обновляет label 
-  const updateLabel = (event)=>{
+  // обновляет label
+  const updateLabel = (event) => {
     const newItem = { ...item };
     newItem.label = event.target.value;
     newItem.editing = false;
     // вызывает ф-ю обновления элемента
     addEditedItem(id, newItem);
-  }
+  };
 
   // при потере фокуса с input
-  const onBlur = (event) =>{
-    updateLabel(event)
+  const onBlur = (event) => {
+    updateLabel(event);
   };
- 
+
   // при нажатии Enter
-  const onKeyPress=(event) => {
+  const onKeyPress = (event) => {
     if (event.key === 'Enter') {
-      updateLabel(event)
+      updateLabel(event);
     }
   };
 
@@ -46,14 +45,12 @@ const Task = function({ onDeleted, onToggleEdit, onToggleDone, item, changeTimer
     className += ' editing';
   }
 
- 
-
   return (
     <li className={className}>
-      <div className="view" >
+      <div className="view">
         <input className="toggle" type="checkbox" checked={!!completed} onChange={onToggleDone} />
         {/* e.preventDefault для того, что бы клик по label не включал timer */}
-        <label onClick={e => e.preventDefault()}> 
+        <label onClick={(e) => e.preventDefault()}>
           <span className="title">{label}</span>
           <Timer changeTimer={changeTimer} timerData={timerData} id={id} />
           <span className="created">created {wasCreated} ago</span>
@@ -61,17 +58,10 @@ const Task = function({ onDeleted, onToggleEdit, onToggleDone, item, changeTimer
         <button className="icon icon-edit" type="button" aria-label="Icon input edit" onClick={onToggleEdit} />
         <button className="icon icon-destroy" type="button" aria-label="Icon input deleted" onClick={onDeleted} />
       </div>
-      <input
-        type="text"
-        className="edit"
-        defaultValue={label}
-        onBlur={onBlur}
-        onKeyPress={onKeyPress}
-      />
+      <input type="text" className="edit" defaultValue={label} onBlur={onBlur} onKeyPress={onKeyPress} />
     </li>
   );
-
-}
+};
 
 Task.propTypes = {
   item: PropTypes.shape({
@@ -92,5 +82,5 @@ Task.propTypes = {
   addEditedItem: PropTypes.func.isRequired,
   onToggleDone: PropTypes.func.isRequired,
   changeTimer: PropTypes.func.isRequired,
-}
+};
 export default Task;

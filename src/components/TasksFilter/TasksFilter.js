@@ -2,8 +2,7 @@ import React from 'react';
 import './TasksFilter.css';
 import PropTypes from 'prop-types';
 
-
-const TasksFilter = function({ itemStatusFilter, onFilterChange }) {
+const TasksFilter = function ({ itemStatusFilter, onFilterChange }) {
   const buttons = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
@@ -20,16 +19,19 @@ const TasksFilter = function({ itemStatusFilter, onFilterChange }) {
 
     return (
       <li key={name}>
-        <button className={className} type="button" 
-        // следит за кликом по кнопке, передает инфо о выбранной родителю 
-        onClick={() => onFilterChange(name)}>
+        <button
+          className={className}
+          type="button"
+          // следит за кликом по кнопке, передает инфо о выбранной родителю
+          onClick={() => onFilterChange(name)}
+        >
           {label}
         </button>
       </li>
     );
   });
   return <ul className="filters">{displayButtons}</ul>;
-}
+};
 TasksFilter.defaultProps = {
   itemStatusFilter: 'all',
 };
@@ -39,5 +41,3 @@ TasksFilter.propTypes = {
   itemStatusFilter: PropTypes.string,
 };
 export default TasksFilter;
-
-
