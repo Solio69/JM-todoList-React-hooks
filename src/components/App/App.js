@@ -5,7 +5,7 @@ import NewTaskForm from '../NewTaskForm/NewTaskForm';
 import TaskList from '../TaskList/TaskList';
 import Footer from '../Footer/Footer';
 
-const App = () => {
+const App = function() {
 
   // если в localStorage есть данные, то устанавливает значение из localStorage, если нет, то пустой массив
   const [todoData, setTodoData]= useState(JSON.parse(localStorage.getItem('todoData')) || [])
@@ -42,6 +42,7 @@ const App = () => {
   // удаляет элемент списка
   const deleteItem = (id) => {
     const ind = todoData.findIndex((el) => el.id === id);
+    // eslint-disable-next-line id-length
     const newArr = todoData.filter((_, index) => index !== ind);
     return setTodoData([...newArr])
   };
@@ -86,12 +87,10 @@ const App = () => {
   };
 
   // удаляет все выполненные tasks
-  const clearCompleted = () => {
-    return setTodoData([...todoData].filter((item) => !item.completed))
-    
-  };
+  const clearCompleted = () => setTodoData([...todoData].filter((item) => !item.completed));
 
   // фильтры 
+  // eslint-disable-next-line no-shadow
   const filters = (arr, filter) => {
     switch (filter) {
       case 'all':

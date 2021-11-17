@@ -1,11 +1,10 @@
-// import React, { Component } from 'react';
 import React, { useState } from 'react';
 import './NewTaskForm.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const NewTaskForm =({onItemAdded })=>{
+const NewTaskForm = function({onItemAdded }) {
 
-  //по умолчанию label пустая строка
+  // по умолчанию label пустая строка
   const [label, setOnLabelChange] = useState('');
   
   // следит за value в input и изменяет State
@@ -27,5 +26,10 @@ const NewTaskForm =({onItemAdded })=>{
     </form>
   )
 }
+
+NewTaskForm.propTypes = {
+  onItemAdded: PropTypes.func.isRequired,
+};
+
 
 export default NewTaskForm;

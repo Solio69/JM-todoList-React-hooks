@@ -1,9 +1,9 @@
 import React from 'react';
 import './TasksFilter.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 
-const TasksFilter =({ itemStatusFilter, onFilterChange })=>{
+const TasksFilter = function({ itemStatusFilter, onFilterChange }) {
   const buttons = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
@@ -30,7 +30,14 @@ const TasksFilter =({ itemStatusFilter, onFilterChange })=>{
   });
   return <ul className="filters">{displayButtons}</ul>;
 }
+TasksFilter.defaultProps = {
+  itemStatusFilter: 'all',
+};
 
+TasksFilter.propTypes = {
+  onFilterChange: PropTypes.func.isRequired,
+  itemStatusFilter: PropTypes.string,
+};
 export default TasksFilter;
 
 

@@ -1,10 +1,12 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React from "react"
 import './Task.css';
-// import React, { Component } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Timer from '../Timer/Timer';
 
-const Task = ({ onDeleted, onToggleEdit, onToggleDone, item, changeTimer, addEditedItem })=> {
+const Task = function({ onDeleted, onToggleEdit, onToggleDone, item, changeTimer, addEditedItem }) {
 
   const { label, dateСreation, completed, editing, timerData, id } = item;
 
@@ -44,11 +46,14 @@ const Task = ({ onDeleted, onToggleEdit, onToggleDone, item, changeTimer, addEdi
     className += ' editing';
   }
 
+ 
+
   return (
     <li className={className}>
-      <div className="view">
+      <div className="view" >
         <input className="toggle" type="checkbox" checked={!!completed} onChange={onToggleDone} />
-        <label>
+        {/* e.preventDefault для того, что бы клик по label не включал timer */}
+        <label onClick={e => e.preventDefault()}> 
           <span className="title">{label}</span>
           <Timer changeTimer={changeTimer} timerData={timerData} id={id} />
           <span className="created">created {wasCreated} ago</span>
@@ -66,5 +71,26 @@ const Task = ({ onDeleted, onToggleEdit, onToggleDone, item, changeTimer, addEdi
     </li>
   );
 
+}
+
+Task.propTypes = {
+  item: PropTypes.shape({
+    label: PropTypes.string,
+    completed: PropTypes.bool,
+    editing: PropTypes.bool,
+    dateСreation: PropTypes.string,
+    id: PropTypes.number,
+    timerData: PropTypes.shape({
+      hours: PropTypes.number,
+      minutes: PropTypes.number,
+      seconds: PropTypes.number,
+      intervalId: PropTypes.number,
+    }),
+  }).isRequired,
+  onDeleted: PropTypes.func.isRequired,
+  onToggleEdit: PropTypes.func.isRequired,
+  addEditedItem: PropTypes.func.isRequired,
+  onToggleDone: PropTypes.func.isRequired,
+  changeTimer: PropTypes.func.isRequired,
 }
 export default Task;

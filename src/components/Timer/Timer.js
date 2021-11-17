@@ -1,7 +1,8 @@
+/* eslint-disable no-plusplus */
 import React, { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const Timer = ({timerData,changeTimer, id})=>{
+const Timer = function({timerData,changeTimer, id}) {
   const [time, setTime]= useState({
     hours: 9,
     minutes: 59,
@@ -44,6 +45,7 @@ const Timer = ({timerData,changeTimer, id})=>{
 
   // включить таймер 
   const startTimer = () => {
+
     // очищаем setInterval если он уже запущен
     if (intervalId) {
       clearInterval(intervalId);
@@ -60,20 +62,21 @@ const Timer = ({timerData,changeTimer, id})=>{
 
   // остановить таймер
   const stopTimer = () => {
+
     if (intervalId) {
       clearInterval(intervalId);
       setIntervalId(0);
     }
 
     // при остановке таймера передаем его данные в родителю
-    const newTimerData = { ...time};
-    changeTimer(id, newTimerData);
+    changeTimer(id, time);
   };
+
 
   // приобразует строки вывода таймера
   const strOutput = (val) => {
     const newStr = String(val);
-    return newStr.length === 1 ? '0' + newStr : newStr;
+    return newStr.length === 1 ? `0${  newStr}` : newStr;
   };
 
   // приобразованные строки с значениями time
@@ -82,7 +85,7 @@ const Timer = ({timerData,changeTimer, id})=>{
   const hoursOutput = strOutput(time.hours);
 
   return(
-      <span className="description">
+      <span className="description" >
         <button className="icon icon-play" type="button" aria-label="icon-play " 
         onClick={startTimer} 
         />
@@ -93,6 +96,27 @@ const Timer = ({timerData,changeTimer, id})=>{
       </span>
   )
 }
+Timer.propTypes  = {
+  id: PropTypes.number.isRequired,
+  timerData: PropTypes.shape({
+    hours: PropTypes.number,
+    minutes: PropTypes.number,
+    seconds: PropTypes.number,
+    intervalId: PropTypes.number,
+  }),
+  changeTimer: PropTypes.func.isRequired,
+}
+
+Timer.defaultProps ={
+  timerData: {
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  }
+}
+
+
+
 export default Timer;
 
 
