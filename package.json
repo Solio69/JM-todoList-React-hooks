@@ -2,7 +2,7 @@
   "name": "todo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://Solio69.github.io/JM-todoList-React-hooks",
+  "homepage": "http://Solio69.github.io/Todo-List-React-hooks",
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
